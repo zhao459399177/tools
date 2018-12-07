@@ -1,0 +1,38 @@
+{
+  "name": "zcy/tools",
+  "description": "the tools",
+  "type": "library",
+  "keywords": [
+    "zcy"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "zcy",
+      "email": "459399177@qq.com"
+    }
+  ],
+  "require": {
+    "php":"7.1.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "zcy\\helper": "src/helper/"
+    },
+    "files":[
+      "src/helpers.php"
+    ]
+  },
+  "extra": {
+    "think-path": "thinkphp"
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
+    }
+  }
+}
