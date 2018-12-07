@@ -17,7 +17,7 @@
   },
   "autoload": {
     "psr-4": {
-      "zcy\\helper": "src/helper/"
+      "zcy\\helper\\": "src/helper/"
     },
     "files":[
       "src/helpers.php"
