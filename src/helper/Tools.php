@@ -119,4 +119,19 @@ class Tools{
         }
         return $array;
     }
+
+    /** 输出 JSON 数据
+     * @param $arr
+     * @param int $code
+     * @param int $httpCode
+     */
+    public static function responseJson($arr, $code = 200, $httpCode = 200){
+        http_response_code($httpCode);
+        header('Content-Type:application/json; charset=utf-8');
+        $msg = isset($arr['msg']) ? $arr['msg'] : '';
+        $return['code'] = $code;
+        $return['msg'] = $msg;
+        $return['data'] = isset($arr['data']) ? $arr['data'] : [];
+        exit(json_encode($return, JSON_UNESCAPED_UNICODE));
+    }
 }
