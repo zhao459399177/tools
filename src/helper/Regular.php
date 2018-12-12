@@ -2,6 +2,10 @@
 namespace zcy\helper;
 class Regular{
 
+    /** 检查邮件是否合法
+     * @param $userName
+     * @return bool
+     */
     public static function checkEmail($userName){
         $email_match = preg_match('/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/', $userName);
         if($email_match){
@@ -11,6 +15,10 @@ class Regular{
         }
     }
 
+    /** 检查手机号是否合法
+     * @param $userName
+     * @return bool
+     */
     public static function checkMobile($userName)
     {
         $mobile_match = preg_match('/^(0|86|17951)?(1[3-9])[0-9]{9}$/', $userName);
@@ -21,6 +29,10 @@ class Regular{
         }
     }
 
+    /** 验证是身份证法是否合法
+     * @param $userName
+     * @return bool
+     */
     public static function checkIdCard($userName)
     {
         $idcard_match = preg_match('/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/', $userName);

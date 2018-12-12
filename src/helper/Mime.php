@@ -1,14 +1,8 @@
 <?php
 namespace zcy\helper;
 class Mime{
-    /**
-     * 缓存路径
-     * @var null
-     */
-    public static $cache_path = null;
-    //默认日志保存的文件路径
-    public static $log_path=null;
 
+    public static $cache_path = null;
     //处理缓存的类
     public static $cache=null;
     /**
