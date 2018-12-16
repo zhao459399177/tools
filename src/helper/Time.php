@@ -171,11 +171,16 @@ class Time
         return self::daysToSecond() * 7 * $week;
     }
 
-    /**
-     *返回现在的微秒时间
+    /** 获得现在的毫秒
+     * @param int $isMicrosecond
+     * @return float|int
      */
-    public static function nowMicrotime(){
-        return microtime(true) * 10000;
+    public static function nowMillisecond(int $isMicrosecond=0){
+        $multiple = 1000;
+        if ($isMicrosecond) {
+            $multiple = $multiple * 10;
+        }
+        return ceil(microtime(true) * $multiple);
     }
 
     /** 把时间戳转换成可读格式
