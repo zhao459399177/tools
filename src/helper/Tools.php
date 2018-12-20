@@ -9,7 +9,7 @@ class Tools{
      * @param string $child_field
      * @return array
      */
-    public static function listToTree($items, $id_field = 'id', $parent_field = 'parentId', $child_field = 'child')
+    public static function listToTree(array $items,string $id_field = 'id',string $parent_field = 'parentId',string $child_field = 'child'):array
     {
         $tree = []; //格式化好的树
         foreach ($items as &$item) {
@@ -22,7 +22,13 @@ class Tools{
         return $tree;
     }
 
-    public static function listSortBy($list, $field, $sortby = 'asc')
+    /**
+     * @param array $list
+     * @param string $field
+     * @param string $sortby
+     * @return array|bool
+     */
+    public static function listSortBy(array $list,string $field,string $sortby = 'asc')
     {
         if (is_array($list)) {
             $refer = $resultSet = [];
@@ -46,7 +52,14 @@ class Tools{
         return false;
     }
 
-    public static function treeToList($tree, $child = '_child', &$list = [], $order = '')
+    /**
+     * @param array $tree
+     * @param string $child
+     * @param array $list
+     * @param string $order
+     * @return array|bool
+     */
+    public static function treeToList(array $tree,string $child = '_child',array &$list = [],string $order = '')
     {
         if (is_array($tree)) {
             $refer = [];
@@ -65,7 +78,11 @@ class Tools{
         return $list;
     }
 
-    public static function isUrl($str)
+    /**
+     * @param string $str
+     * @return bool
+     */
+    public static function isUrl(string $str):bool
     {
         if (strtolower(substr($str, 0, 7)) == 'http://' || strtolower(substr($str, 0, 8)) == 'https://') {
             return true;
@@ -79,7 +96,7 @@ class Tools{
      * @param int $decimals
      * @return string
      */
-    public static function humanFileSize($bytes, $decimals = 2)
+    public static function humanFileSize(int $bytes,int $decimals = 2):string
     {
         $size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB'];
         $factor = floor((strlen($bytes) - 1) / 3);
@@ -91,7 +108,7 @@ class Tools{
      * @param array $arr 数组
      * @return object
      */
-    public static function arrayToObject($arr) {
+    public static function arrayToObject(array $arr):object {
         if (gettype($arr) != 'array') {
             return;
         }
@@ -125,7 +142,8 @@ class Tools{
      * @param int $code
      * @param int $httpCode
      */
-    public static function responseJson($arr, $code = 200, $httpCode = 200){
+    public static function responseJson(array $arr,int $code = 200,int $httpCode = 200):string
+    {
         http_response_code($httpCode);
         header('Content-Type:application/json; charset=utf-8');
         $msg = isset($arr['msg']) ? $arr['msg'] : '';

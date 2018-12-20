@@ -6,7 +6,8 @@ class Regular{
      * @param $userName
      * @return bool
      */
-    public static function checkEmail($userName){
+    public static function checkEmail(string $userName):bool
+    {
         $email_match = preg_match('/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/', $userName);
         if($email_match){
             return true;
@@ -19,7 +20,7 @@ class Regular{
      * @param $userName
      * @return bool
      */
-    public static function checkMobile($userName)
+    public static function checkMobile($userName):bool
     {
         $mobile_match = preg_match('/^(0|86|17951)?(1[3-9])[0-9]{9}$/', $userName);
         if ($mobile_match) {
@@ -33,7 +34,7 @@ class Regular{
      * @param $userName
      * @return bool
      */
-    public static function checkIdCard($userName)
+    public static function checkIdCard(string $userName):bool
     {
         $idcard_match = preg_match('/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/', $userName);
         if ($idcard_match) {
@@ -44,7 +45,7 @@ class Regular{
     }
 
     /*********php验证身份证号码是否正确函数*********/
-    public static function isRightCard($id){
+    public static function isRightCard(string $id):bool {
         $id = strtoupper($id);
         $regx = "/(^\d{15}$)|(^\d{17}([0-9]|X)$)/";
         $arr_split = array();

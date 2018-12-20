@@ -7,7 +7,7 @@ class Time
      *
      * @return array
      */
-    public static function today()
+    public static function today():array
     {
         list($y, $m, $d) = explode('-', date('Y-m-d'));
         return [
@@ -20,7 +20,7 @@ class Time
      *
      * @return array
      */
-    public static function yesterday()
+    public static function yesterday():array
     {
         $yesterday = date('d') - 1;
         return [
@@ -33,7 +33,7 @@ class Time
      *
      * @return array
      */
-    public static function week()
+    public static function week():array
     {
         list($y, $m, $d, $w) = explode('-', date('Y-m-d-w'));
         if($w == 0) $w = 7; //修正周日的问题
@@ -46,7 +46,7 @@ class Time
      *
      * @return array
      */
-    public static function lastWeek()
+    public static function lastWeek():array
     {
         $timestamp = time();
         return [
@@ -59,7 +59,7 @@ class Time
      *
      * @return array
      */
-    public static function month($everyDay = false)
+    public static function month($everyDay = false):array
     {
         list($y, $m, $t) = explode('-', date('Y-m-t'));
         return [
@@ -72,7 +72,7 @@ class Time
      *
      * @return array
      */
-    public static function lastMonth()
+    public static function lastMonth():array
     {
         $y = date('Y');
         $m = date('m');
@@ -85,7 +85,7 @@ class Time
      *
      * @return array
      */
-    public static function year()
+    public static function year():array
     {
         $y = date('Y');
         return [
@@ -98,7 +98,7 @@ class Time
      *
      * @return array
      */
-    public static function lastYear()
+    public static function lastYear():array
     {
         $year = date('Y') - 1;
         return [
@@ -117,7 +117,7 @@ class Time
      * @param bool $now 返回现在或者昨天结束时间戳
      * @return array
      */
-    public static function dayToNow(int $day = 1, $now = true)
+    public static function dayToNow(int $day = 1,bool $now = true):array
     {
         $end = time();
         if (!$now) {
@@ -134,7 +134,7 @@ class Time
      * @param int $day
      * @return int
      */
-    public static function daysAgo(int $day = 1)
+    public static function daysAgo(int $day = 1):int
     {
         $nowTime = time();
         return $nowTime - self::daysToSecond($day);
@@ -145,7 +145,7 @@ class Time
      * @param int $day
      * @return int
      */
-    public static function daysAfter(int $day = 1)
+    public static function daysAfter(int $day = 1):int
     {
         $nowTime = time();
         return $nowTime + self::daysToSecond($day);
@@ -156,7 +156,7 @@ class Time
      * @param int $day
      * @return int
      */
-    public static function daysToSecond(int $day = 1)
+    public static function daysToSecond(int $day = 1):int
     {
         return $day * 86400;
     }
@@ -166,7 +166,7 @@ class Time
      * @param int $week
      * @return int
      */
-    public static function weekToSecond(int $week = 1)
+    public static function weekToSecond(int $week = 1):int
     {
         return self::daysToSecond() * 7 * $week;
     }
@@ -175,7 +175,8 @@ class Time
      * @param int $isMicrosecond
      * @return float|int
      */
-    public static function nowMillisecond(int $isMicrosecond=0){
+    public static function nowMillisecond(int $isMicrosecond=0):int
+    {
         $multiple = 1000;
         if ($isMicrosecond) {
             $multiple = $multiple * 10;
@@ -187,7 +188,8 @@ class Time
      * @param int $timestamp
      * @return false|string
      */
-    public static function timeToFormat(int $timestamp=0){
+    public static function timeToFormat(int $timestamp=0):string
+    {
         return self::timeFormat($timestamp,'Y-m-d H:i:s');
     }
 
@@ -195,11 +197,13 @@ class Time
      * @param int $timestamp
      * @return false|string
      */
-    public static function timeToInt(int $timestamp=0){
+    public static function timeToInt(int $timestamp = 0): string
+    {
         return self::timeFormat($timestamp,'YmdHis');
     }
 
-    private static function timeFormat(int $timestamp,$format){
+    private static function timeFormat(int $timestamp,string $format)
+    {
         if ($timestamp == 0) {
             $timestamp = time();
         }
@@ -210,7 +214,7 @@ class Time
      * @param $seconds
      * @return string
      */
-    public static function secondsToStr(int $seconds=0)
+    public static function secondsToStr(int $seconds=0):string
     {
         if (is_numeric($seconds)) {
             $value = [

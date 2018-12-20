@@ -5,7 +5,7 @@ class Number{
      * @param $number
      * @return mixed|string
      */
-    public static function numberToBig($number)
+    public static function numberToBig(int $number):string
     {
         $chiNum = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
         $chiUni = ['', '十', '百', '千', '万', '十', '百', '千', '亿'];
@@ -52,7 +52,7 @@ class Number{
      * @param  boolean $sim 使用小写（默认）
      * @return string
      */
-    public static function numberToChinese($num, $mode = true, $sim = true)
+    public static function numberToChinese(int $num, bool $mode = true,bool $sim = true):string
     {
         if (!is_numeric($num)) return $num;
         $char = $sim ? array('零', '一', '二', '三', '四', '五', '六', '七', '八', '九') : array('零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖');
