@@ -8,18 +8,11 @@ class Tools{
      * @param string $parent_field
      * @param string $child_field
      * @return array
+      * @deprecated
      */
     public static function listToTree(array $items,string $id_field = 'id',string $parent_field = 'parentId',string $child_field = 'child'):array
     {
-        $tree = []; //格式化好的树
-        foreach ($items as &$item) {
-            if (isset($items[$item[$parent_field]])) {
-                $items[$item[$parent_field]][$child_field][] = &$items[$item[$id_field]];
-            } else {
-                $tree[] = &$items[$item[$id_field]];
-            }
-        }
-        return $tree;
+        return Arr::listToTree($items, $id_field, $parent_field, $child_field);
     }
 
     /**
@@ -27,29 +20,11 @@ class Tools{
      * @param string $field
      * @param string $sortby
      * @return array|bool
+     * @deprecated
      */
     public static function listSortBy(array $list,string $field,string $sortby = 'asc')
     {
-        if (is_array($list)) {
-            $refer = $resultSet = [];
-            foreach ($list as $i => $data)
-                $refer[$i] = &$data[$field];
-            switch ($sortby) {
-                case 'asc': // 正向排序
-                    asort($refer);
-                    break;
-                case 'desc':// 逆向排序
-                    arsort($refer);
-                    break;
-                case 'nat': // 自然排序
-                    natcasesort($refer);
-                    break;
-            }
-            foreach ($refer as $key => $val)
-                $resultSet[] = &$list[$key];
-            return $resultSet;
-        }
-        return false;
+        return Arr::listSortBy($list, $field, $sortby);
     }
 
     /**
@@ -58,24 +33,11 @@ class Tools{
      * @param array $list
      * @param string $order
      * @return array|bool
+     * @deprecated
      */
     public static function treeToList(array $tree,string $child = '_child',array &$list = [],string $order = '')
     {
-        if (is_array($tree)) {
-            $refer = [];
-            foreach ($tree as $key => $value) {
-                $reffer = $value;
-                if (isset($reffer[$child])) {
-                    unset($reffer[$child]);
-                    self::treeToList($value[$child], $child, $list, $order);
-                }
-                $list[] = $reffer;
-            }
-            if ($order !== '') {
-                $list = self::listSortBy($list, $sortby = 'asc', $order);
-            }
-        }
-        return $list;
+        return Arr::treeToList($tree, $child, $list, $order);
     }
 
     /**
@@ -107,40 +69,27 @@ class Tools{
      * 数组 转 对象
      * @param array $arr 数组
      * @return object
+     * @deprecated
      */
     public static function arrayToObject(array $arr):object {
-        if (gettype($arr) != 'array') {
-            return;
-        }
-        foreach ($arr as $k => $v) {
-            if (gettype($v) == 'array' || getType($v) == 'object') {
-                $arr[$k] = (object)self::arrayToObject($v);
-            }
-        }
-        return (object)$arr;
+        return Arr::arrayToObject($arr);
+    }
+
+    /** 对象 转 数组
+     * @param $array
+     * @return array
+     * @deprecated
+     */
+    public static function objectToArray($array) {
+        return Arr::objectToArray($array);
     }
 
     /**
-     * 对象 转 数组
-     * @param object $obj 对象
-     * @return array
-     */
-    public static function objectToArray($array) {
-        if (is_object($array)) {
-            $array = (array)$array;
-        }
-        if (is_array($array)) {
-            foreach ($array as $key => $value) {
-                $array[$key] = self::objectToArray($value);
-            }
-        }
-        return $array;
-    }
-
-    /** 输出 JSON 数据
-     * @param $arr
+     * @param array $arr
      * @param int $code
      * @param int $httpCode
+     * @return string
+     * 输出 JSON 数据
      */
     public static function responseJson(array $arr,int $code = 200,int $httpCode = 200):string
     {
