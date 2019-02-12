@@ -144,20 +144,23 @@ class Arr{
      */
     public static function arrayColumns($array, $columnKey, $indexKey = null):array
     {
-        $result = [];
+        $temp = $columnKey;
+        $result = array();
         if (!is_array($columnKey)) {
             $result = array_column($array, $columnKey, $indexKey);
         } elseif (empty($columnKey)) {
             $result = array_column($array, null, $indexKey);
         } else {
             foreach ($array as $subArray) {
-                if (!is_null($indexKey)) $columnKey[] = $indexKey;
+                if (!is_null($indexKey)) {
+                    if (!in_array($indexKey, $columnKey)) $columnKey[] = $indexKey;
+                }
                 $subArray = array_intersect_key($subArray, array_combine($columnKey, $columnKey));
                 if (is_null($indexKey)) {
                     $result[] = $subArray;
                 } elseif (array_key_exists($indexKey, $subArray)) {
                     $index = is_object($subArray) ? $subArray->$indexKey : $subArray[$indexKey];
-                    unset($subArray[$indexKey]);
+                    if (!in_array($indexKey, $temp)) unset($subArray[$indexKey]);
                     $result[$index] = $subArray;
                 }
             }
