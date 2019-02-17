@@ -167,4 +167,21 @@ class Arr{
         }
         return $result;
     }
+
+    /**
+     * @param string $json
+     * @return array
+     */
+    public static function json2Arr(string $json):array {
+        return json_decode($json,true);
+    }
+
+    /**
+     * @param array $arr
+     * @return false|string
+     */
+
+    public static function arr2Json(array $arr):string {
+        return json_encode($arr,JSON_UNESCAPED_UNICODE);
+    }
 }

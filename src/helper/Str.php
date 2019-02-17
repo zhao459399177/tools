@@ -104,4 +104,20 @@ class Str{
         $value = ucwords(str_replace(['-', '_'], ' ', $value));
         return static::$studlyCache[$key] = str_replace(' ', '', $value);
     }
+
+    /**
+     * @param $str
+     * @return false|string
+     */
+    public static function utf82Gb2312(string $str):string {
+        return iconv('utf-8', 'gb2312//IGNORE', $str);
+    }
+
+    /**
+     * @param $str
+     * @return false|string
+     */
+    public static function gb23122Utf8(string $str):string {
+       return iconv('gb2312', 'utf-8//IGNORE', $str);
+    }
 }
