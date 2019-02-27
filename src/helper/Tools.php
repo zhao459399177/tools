@@ -72,7 +72,7 @@ class Tools{
      * @deprecated
      */
     public static function arrayToObject(array $arr):object {
-        return Arr::arrayToObject($arr);
+        return Arr::array2object($arr);
     }
 
     /** 对象 转 数组
@@ -81,7 +81,7 @@ class Tools{
      * @deprecated
      */
     public static function objectToArray($array) {
-        return Arr::objectToArray($array);
+        return Arr::object2array($array);
     }
 
     /**
@@ -95,10 +95,10 @@ class Tools{
     {
         http_response_code($httpCode);
         header('Content-Type:application/json; charset=utf-8');
-        $msg = isset($arr['msg']) ? $arr['msg'] : '';
+        $msg = $arr['msg'] ?? '';
         $return['code'] = $code;
         $return['msg'] = $msg;
-        $return['data'] = isset($arr['data']) ? $arr['data'] : [];
-        exit(json_encode($return, JSON_UNESCAPED_UNICODE));
+        $return['data'] = $arr['data'] ?? [];
+        echo json_encode($return, JSON_UNESCAPED_UNICODE);
     }
 }

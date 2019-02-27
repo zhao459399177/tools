@@ -82,13 +82,13 @@ class Arr{
      * @param array $arr 数组
      * @return object
      */
-    public static function arrayToObject(array $arr):object {
+    public static function array2object(array $arr):object {
         if (gettype($arr) != 'array') {
             return;
         }
         foreach ($arr as $k => $v) {
             if (gettype($v) == 'array' || getType($v) == 'object') {
-                $arr[$k] = (object)self::arrayToObject($v);
+                $arr[$k] = (object)self::array2object($v);
             }
         }
         return (object)$arr;
@@ -98,13 +98,13 @@ class Arr{
      * @param $array
      * @return array
      */
-    public static function objectToArray($array):array {
+    public static function object2array($array):array {
         if (is_object($array)) {
             $array = (array)$array;
         }
         if (is_array($array)) {
             foreach ($array as $key => $value) {
-                $array[$key] = self::objectToArray($value);
+                $array[$key] = self::object2array($value);
             }
         }
         return $array;
@@ -168,11 +168,58 @@ class Arr{
         return $result;
     }
 
+
+    /**
+     * 数组转XML内容
+     * @param array $data
+     * @return string
+     */
+    public static function arr2xml($data)
+    {
+        return "<xml>" . self::_arr2xml($data) . "</xml>";
+    }
+
+    /**
+     * XML内容生成
+     * @param array $data 数据
+     * @param string $content
+     * @return string
+     */
+    private static function _arr2xml($data, $content = '')
+    {
+        foreach ($data as $key => $val) {
+            is_numeric($key) && $key = 'item';
+            $content .= "<{$key}>";
+            if (is_array($val) || is_object($val)) {
+                $content .= self::_arr2xml($val);
+            } elseif (is_string($val)) {
+                $content .= '<![CDATA[' . preg_replace("/[\\x00-\\x08\\x0b-\\x0c\\x0e-\\x1f]/", '', $val) . ']]>';
+            } else {
+                $content .= $val;
+            }
+            $content .= "</{$key}>";
+        }
+        return $content;
+    }
+
+    /**
+     * 解析XML内容到数组
+     * @param string $xml
+     * @return array
+     */
+    public static function xml2arr($xml)
+    {
+        $entity = libxml_disable_entity_loader(true);
+        $data = (array)simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        libxml_disable_entity_loader($entity);
+        return json_decode(json_encode($data), true);
+    }
+
     /**
      * @param string $json
      * @return array
      */
-    public static function json2Arr(string $json):array {
+    public static function json2arr(string $json):array {
         return json_decode($json,true);
     }
 
@@ -181,7 +228,7 @@ class Arr{
      * @return false|string
      */
 
-    public static function arr2Json(array $arr):string {
+    public static function arr2json(array $arr):string {
         return json_encode($arr,JSON_UNESCAPED_UNICODE);
     }
 }
