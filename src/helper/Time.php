@@ -93,6 +93,7 @@ class Time
             mktime(23, 59, 59, 12, 31, $y)
         ];
     }
+
     /**
      * 返回去年开始和结束的时间戳
      *
@@ -175,7 +176,7 @@ class Time
      * @param int $isMicrosecond
      * @return float|int
      */
-    public static function nowMillisecond(int $isMicrosecond=0):int
+    public static function nowMillisecond(int $isMicrosecond = 0):int
     {
         $multiple = 1000;
         if ($isMicrosecond) {
@@ -186,22 +187,49 @@ class Time
 
     /** 把时间戳转换成可读格式
      * @param int $timestamp
+     * @param int $type
      * @return false|string
      */
-    public static function timeToFormat(int $timestamp=0):string
+    public static function timeToFormat(int $timestamp = 0, int $type = 1):string
     {
-        return self::timeFormat($timestamp,'Y-m-d H:i:s');
+        switch ($type) {
+            case 1:
+                $format = 'Y-m-d H:i:s';
+                break;
+            case 2:
+                $format = 'Y/m/d H:i:s';
+                break;
+            case 3:
+                $format = 'YmdHis';
+                break;
+            case 4:
+                $format = 'Y-m-d';
+                break;
+            case 5:
+                $format = 'Ymd';
+                break;
+            default:
+                $format = 'Y-m-d H:i:s';
+                break;
+        }
+        return self::timeFormat($timestamp,$format);
     }
 
     /** 把时间戳转换成可读格式
      * @param int $timestamp
      * @return false|string
+     * @deprecated
      */
     public static function timeToInt(int $timestamp = 0): string
     {
         return self::timeFormat($timestamp,'YmdHis');
     }
 
+    /**
+     * @param int $timestamp
+     * @param string $format
+     * @return false|string
+     */
     private static function timeFormat(int $timestamp,string $format)
     {
         if ($timestamp == 0) {

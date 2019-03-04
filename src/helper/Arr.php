@@ -231,4 +231,20 @@ class Arr{
     public static function arr2json(array $arr):string {
         return json_encode($arr,JSON_UNESCAPED_UNICODE);
     }
+
+    /**
+     * @param string $string
+     * @return array
+     */
+    public static function serialize2Arr(string $string):array {
+        return unserialize($string);
+    }
+
+    /**
+     * @param array $arr
+     * @return string
+     */
+    public static function array2Serialize(array $arr):string {
+        return serialize($arr);
+    }
 }
