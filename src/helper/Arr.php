@@ -82,9 +82,9 @@ class Arr{
      * @param array $arr 数组
      * @return object
      */
-    public static function array2object(array $arr):object {
+    public static function array2object(array $arr):?object {
         if (gettype($arr) != 'array') {
-            return;
+            return null;
         }
         foreach ($arr as $k => $v) {
             if (gettype($v) == 'array' || getType($v) == 'object') {
@@ -98,7 +98,7 @@ class Arr{
      * @param $array
      * @return array
      */
-    public static function object2array($array):array {
+    public static function object2array($array):?array {
         if (is_object($array)) {
             $array = (array)$array;
         }
@@ -219,7 +219,7 @@ class Arr{
      * @param string $json
      * @return array
      */
-    public static function json2arr(string $json):array {
+    public static function json2arr(string $json):?array {
         return json_decode($json,true);
     }
 
@@ -228,7 +228,7 @@ class Arr{
      * @return false|string
      */
 
-    public static function arr2json(array $arr):string {
+    public static function arr2json(array $arr):?string {
         return json_encode($arr,JSON_UNESCAPED_UNICODE);
     }
 
@@ -236,7 +236,7 @@ class Arr{
      * @param string $string
      * @return array
      */
-    public static function serialize2Arr(string $string):array {
+    public static function serialize2Arr(string $string):?array {
         return unserialize($string);
     }
 
@@ -244,7 +244,7 @@ class Arr{
      * @param array $arr
      * @return string
      */
-    public static function array2Serialize(array $arr):string {
+    public static function array2Serialize(array $arr):?string {
         return serialize($arr);
     }
 }
