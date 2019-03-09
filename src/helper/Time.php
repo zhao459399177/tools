@@ -239,34 +239,54 @@ class Time
     }
 
     /** 把时间差秒数转换为可识别的时间
-     * @param $seconds
+     * @param int $seconds
+     * @param bool $accurate
      * @return string
      */
-    public static function secondsToStr(int $seconds=0):string
+    public static function secondsToStr(int $seconds = 0, bool $accurate = true):string
     {
         if (is_numeric($seconds)) {
             $value = [
-                "days" => 0, "hours" => 0,
-                "minutes" => 0, "seconds" => 0,
+                'year'=>0,'month'=>0,
+                'days' => 0, 'hours' => 0,
+                'minutes' => 0, 'seconds' => 0,
             ];
+            if ($seconds >= 31536000) {
+                $value['year'] = floor($seconds / 31536000);
+                $seconds = ($seconds / 31536000);
+            }
+            if($seconds>=2592000){
+                $value['month'] = floor($seconds / 2592000);
+                $seconds = ($seconds % 2592000);
+            }
             if ($seconds >= 86400) {
-                $value["days"] = floor($seconds / 86400);
+                $value['days'] = floor($seconds / 86400);
                 $seconds = ($seconds % 86400);
             }
             if ($seconds >= 3600) {
-                $value["hours"] = floor($seconds / 3600);
+                $value['hours'] = floor($seconds / 3600);
                 $seconds = ($seconds % 3600);
             }
             if ($seconds >= 60) {
-                $value["minutes"] = floor($seconds / 60);
+                $value['minutes'] = floor($seconds / 60);
                 $seconds = ($seconds % 60);
             }
-            $value["seconds"] = floor($seconds);
+            $value['seconds'] = floor($seconds);
             $t = '';
-            $t .= $value['days'] ? $value["days"] . "天" : '';
-            $t .= $value['hours'] ? $value["hours"] . "小时" : '';
-            $t .= $value['minutes'] ? $value["minutes"] . "分" : '';
-            $t .= $value["seconds"] . "秒";
+            $temp=[];
+            $temp[] = $value['year'] ? $value['year'] . '年' : '';
+            $temp[] = $value['month'] ? $value['month'] . '月' : '';
+            $temp[] = $value['days'] ? $value['days'] . '天' : '';
+            $temp[] = $value['hours'] ? $value['hours'] . '小时' : '';
+            $temp[] = $value['minutes'] ? $value['minutes'] . '分' : '';
+            $temp[] = $value['seconds'] . '秒';
+            foreach ($temp as $v) {
+                if ($accurate) {
+                    $t .= $v;
+                } else {
+                    $t = $v . '以前';
+                }
+            }
             return $t;
         } else {
             return '';

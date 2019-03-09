@@ -9,11 +9,7 @@ class Regular{
     public static function checkEmail(string $userName):bool
     {
         $email_match = preg_match('/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/', $userName);
-        if($email_match){
-            return true;
-        }else{
-            return false;
-        }
+        return $email_match ? true : false;
     }
 
     /** 检查手机号是否合法
@@ -23,11 +19,7 @@ class Regular{
     public static function checkMobile($userName):bool
     {
         $mobile_match = preg_match('/^(0|86|17951)?(1[3-9])[0-9]{9}$/', $userName);
-        if ($mobile_match) {
-            return true;
-        } else {
-            return false;
-        }
+        return $mobile_match ? true : false;
     }
 
     /** 验证是身份证法是否合法
@@ -36,15 +28,26 @@ class Regular{
      */
     public static function checkIdCard(string $userName):bool
     {
-        $idcard_match = preg_match('/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/', $userName);
-        if ($idcard_match) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+        $pattern = '/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/';
+        $idcard_match = preg_match($pattern, $userName);
+        return $idcard_match ? true : false;
+     }
+
+    /**
+     * @param string $url
+     * @return bool
+     */
+     public static function checkUrl(string $url):bool {
+         $pattern = '/^https?:\/\/(([a-zA-Z0-9_-])+(\.)?)*(:\d+)?(\/((\.)?(\?)?=?&?[a-zA-Z0-9_-](\?)?)*)*$/i';
+         $url_match = preg_match($pattern, $url);
+         return $url_match ? true : false;
+     }
 
     /*********php验证身份证号码是否正确函数*********/
+    /**
+     * @param string $id
+     * @return bool
+     */
     public static function isRightCard(string $id):bool {
         $id = strtoupper($id);
         $regx = "/(^\d{15}$)|(^\d{17}([0-9]|X)$)/";

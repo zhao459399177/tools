@@ -221,11 +221,7 @@ class Arr{
      */
     public static function json2arr(string $json):?array {
         $temp = json_decode($json, true);
-        if (is_array($temp)) {
-            return $temp;
-        } else {
-            return [];
-        }
+        return is_array($temp) ? $temp : [];
     }
 
     /**
