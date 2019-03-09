@@ -247,15 +247,15 @@ class Time
     {
         if (is_numeric($seconds)) {
             $value = [
-                'year'=>0,'month'=>0,
+                'year' => 0, 'month' => 0,
                 'days' => 0, 'hours' => 0,
                 'minutes' => 0, 'seconds' => 0,
             ];
             if ($seconds >= 31536000) {
                 $value['year'] = floor($seconds / 31536000);
-                $seconds = ($seconds / 31536000);
+                $seconds = ($seconds % 31536000);
             }
-            if($seconds>=2592000){
+            if ($seconds >= 2592000) {
                 $value['month'] = floor($seconds / 2592000);
                 $seconds = ($seconds % 2592000);
             }
@@ -273,18 +273,19 @@ class Time
             }
             $value['seconds'] = floor($seconds);
             $t = '';
-            $temp=[];
-            $temp[] = $value['year'] ? $value['year'] . '年' : '';
-            $temp[] = $value['month'] ? $value['month'] . '月' : '';
-            $temp[] = $value['days'] ? $value['days'] . '天' : '';
-            $temp[] = $value['hours'] ? $value['hours'] . '小时' : '';
-            $temp[] = $value['minutes'] ? $value['minutes'] . '分' : '';
+            $temp = [];
+            $value['year'] && $temp[] = $value['year'] . '年';
+            $value['month'] && $temp[] = $value['month'] . '月';
+            $value['days'] && $temp[] = $value['days'] . '天';
+            $value['hours'] && $temp[] = $value['hours'] . '小时';
+            $value['minutes'] ? $temp[] = $value['minutes'] . '分' : '';
             $temp[] = $value['seconds'] . '秒';
             foreach ($temp as $v) {
                 if ($accurate) {
                     $t .= $v;
                 } else {
-                    $t = $v . '以前';
+                    $t = $v . '前';
+                    break;
                 }
             }
             return $t;
