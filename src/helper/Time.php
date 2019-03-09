@@ -278,7 +278,7 @@ class Time
             $value['month'] && $temp[] = $value['month'] . '月';
             $value['days'] && $temp[] = $value['days'] . '天';
             $value['hours'] && $temp[] = $value['hours'] . '小时';
-            $value['minutes'] ? $temp[] = $value['minutes'] . '分' : '';
+            $value['minutes'] && $temp[] = $value['minutes'] . '分';
             $temp[] = $value['seconds'] . '秒';
             foreach ($temp as $v) {
                 if ($accurate) {
