@@ -220,7 +220,12 @@ class Arr{
      * @return array
      */
     public static function json2arr(string $json):?array {
-        return json_decode($json,true);
+        $temp = json_decode($json, true);
+        if (is_array($temp)) {
+            return $temp;
+        } else {
+            return [];
+        }
     }
 
     /**
