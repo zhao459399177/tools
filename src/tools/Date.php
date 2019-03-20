@@ -110,7 +110,7 @@ class Date
      * @static
      * @access public
      */
-    public function __construct($date = '')
+    private function __construct($date = '')
     {
         //分析日期
         $this->date = $this->parse($date);
