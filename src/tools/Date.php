@@ -1,8 +1,8 @@
 <?php
-namespace zcy\helper;
+namespace zcy\tools;
 class Date
 {
-
+    use Singleton;
     /**
      * 日期的时间戳
      * @var integer
