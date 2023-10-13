@@ -243,49 +243,39 @@ class Time
      * @param bool $accurate
      * @return string
      */
-    public static function secondsToStr(int $seconds = 0, bool $accurate = true):string
+    public static function secondsToStr(int $seconds = 0, bool $accurate = true, int $length = 6):string
     {
-        if (is_numeric($seconds)) {
-            $value = [
-                'year' => 0, 'month' => 0,
-                'days' => 0, 'hours' => 0,
-                'minutes' => 0, 'seconds' => 0,
+        $seconds = intval($seconds);
+        if (is_int($seconds)) {
+            $arr = [
+                ['name' => '年', 'seconds' => 31536000],
+                ['name' => '月', 'seconds' => 2592000],
+                ['name' => '天', 'seconds' => 86400],
+                ['name' => '小时', 'seconds' => 3600],
+                ['name' => '分', 'seconds' => 60],
+                ['name' => '秒', 'seconds' => 1],
             ];
-            if ($seconds >= 31536000) {
-                $value['year'] = floor($seconds / 31536000);
-                $seconds = ($seconds % 31536000);
-            }
-            if ($seconds >= 2592000) {
-                $value['month'] = floor($seconds / 2592000);
-                $seconds = ($seconds % 2592000);
-            }
-            if ($seconds >= 86400) {
-                $value['days'] = floor($seconds / 86400);
-                $seconds = ($seconds % 86400);
-            }
-            if ($seconds >= 3600) {
-                $value['hours'] = floor($seconds / 3600);
-                $seconds = ($seconds % 3600);
-            }
-            if ($seconds >= 60) {
-                $value['minutes'] = floor($seconds / 60);
-                $seconds = ($seconds % 60);
-            }
-            $value['seconds'] = floor($seconds);
-            $t = '';
             $temp = [];
-            $value['year'] && $temp[] = $value['year'] . '年';
-            $value['month'] && $temp[] = $value['month'] . '月';
-            $value['days'] && $temp[] = $value['days'] . '天';
-            $value['hours'] && $temp[] = $value['hours'] . '小时';
-            $value['minutes'] && $temp[] = $value['minutes'] . '分';
-            $temp[] = $value['seconds'] . '秒';
-            foreach ($temp as $v) {
-                if ($accurate) {
-                    $t .= $v;
-                } else {
-                    $t = $v . '前';
-                    break;
+            foreach ($arr as $k => $v) {
+                if ($seconds >= $v['seconds']) {
+                    $temp[] = sprintf('%d%s', floor($seconds / $v['seconds']), $v['name']);
+                    $seconds = ($seconds % $v['seconds']);
+                }
+            }
+            $t = '';
+            if (count($temp) == 0) {
+                $t = '0秒';
+            } else {
+                $i = 0;
+                foreach ($temp as $v) {
+                    if ($accurate) {
+                        $i++;
+                        $t .= $v;
+                        if ($i >= $length) break;
+                    } else {
+                        $t = $v . '前';
+                        break;
+                    }
                 }
             }
             return $t;
