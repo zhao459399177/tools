@@ -262,23 +262,7 @@ class Time
                     $seconds = ($seconds % $v['seconds']);
                 }
             }
-            $t = '';
-            if (count($temp) == 0) {
-                $t = '0秒';
-            } else {
-                $i = 0;
-                foreach ($temp as $v) {
-                    if ($accurate) {
-                        $i++;
-                        $t .= $v;
-                        if ($i >= $length) break;
-                    } else {
-                        $t = $v . '前';
-                        break;
-                    }
-                }
-            }
-            return $t;
+            return count($temp) == 0 ? '0秒' : ($accurate ? join('', $temp) : $temp[0] . "前");
         } else {
             return '';
         }
